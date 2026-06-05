@@ -1,0 +1,24 @@
+{
+  "name": "Calculadora Rotlles d'Acer",
+  "short_name": "Rotlles Acer",
+  "description": "Calculadora de longitud i pes de cintes d'acer en rotlle",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f6f9",
+  "theme_color": "#185FA5",
+  "lang": "ca",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
