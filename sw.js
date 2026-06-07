@@ -1,8 +1,8 @@
 const CACHE = 'rotlles-acer-v1';
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
+  '/calculadora_pletina/',
+  '/calculadora_pletina/index.html',
+  '/calculadora_pletina/manifest.json',
   'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css',
   'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/fonts/tabler-icons.woff2'
 ];
