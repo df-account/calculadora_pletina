@@ -130,16 +130,16 @@
   <div class="section-card">
     <div class="section-header">
       <div class="section-icon icon-teal"><i class="ti ti-ruler-measure"></i></div>
-      <span class="section-title">Dades de la cinta i tub</span>
+      <span class="section-title">Dades d'ample i diàmetre final</span>
     </div>
     <div class="grid2">
-      <div class="field"><label>Ample cinta (mm)</label><input type="number" id="ample" value="18.35" min="1" step="0.01" inputmode="decimal"></div>
-      <div class="field"><label>Ø tub final (mm)</label><input type="number" id="dfin" value="" min="1" step="0.01" inputmode="decimal" placeholder="opcional"></div>
+      <div class="field"><label>Ample (mm)</label><input type="number" id="ample" value="18.35" min="1" step="0.01" inputmode="decimal"></div>
+      <div class="field"><label>Ø tub final (mm)</label><input type="number" id="dfin" value="" min="1" step="0.01" inputmode="decimal"></div>
     </div>
-    <div class="field"><label>Núm. de cintes iguals</label><input type="number" id="ncintes" value="1" min="1" step="1" inputmode="numeric"></div>
+    <div class="field"><label>Núm. de rotlles iguals</label><input type="number" id="ncintes" value="1" min="1" step="1" inputmode="numeric"></div>
     <div class="err" id="err-msg"><i class="ti ti-alert-circle" style="font-size:16px;flex-shrink:0"></i><span id="err-txt"></span></div>
     <button class="btn-add" onclick="afegirCinta()">
-      <i class="ti ti-plus"></i> Afegir cinta
+      <i class="ti ti-plus"></i> Afegir rotlle
     </button>
   </div>
 
@@ -154,7 +154,7 @@
         <div class="metric-val" id="tot-kg">— <span class="metric-unit">kg</span></div>
       </div>
       <div class="metric full m-amber">
-        <div class="metric-label">Cintes registrades</div>
+        <div class="metric-label">Rotlles registrats</div>
         <div class="metric-val" id="tot-n">—</div>
       </div>
     </div>
@@ -163,12 +163,12 @@
   <div class="section-card">
     <div class="section-header">
       <div class="section-icon icon-amber"><i class="ti ti-list-details"></i></div>
-      <span class="section-title">Registre de cintes</span>
+      <span class="section-title">Registre de Rotlles</span>
     </div>
     <div id="llista-cintes">
       <div class="empty-state">
         <i class="ti ti-inbox"></i>
-        <p>Encara no s'ha afegit cap cinta</p>
+        <p>Encara no s'ha afegit res</p>
       </div>
     </div>
   </div>
@@ -179,12 +179,38 @@
 let cintes=[];
 let mode='ext';
 
+// ── Persistència de les dades introduïdes ────────────────────────
+const CAMPS_PERSISTENTS = ['dext','dint','corona','dint2','esp','mat','ample','dfin','ncintes'];
+const STORAGE_KEY = 'rotllesAcer_ultimsValors';
+
+function desarValors(){
+  const valors={};
+  CAMPS_PERSISTENTS.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) valors[id]=el.value;
+  });
+  valors.mode=mode;
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(valors)); }catch(e){}
+}
+
+function carregarValors(){
+  let valors=null;
+  try{ valors=JSON.parse(localStorage.getItem(STORAGE_KEY)); }catch(e){}
+  if(!valors) return;
+  CAMPS_PERSISTENTS.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el && valors[id]!==undefined && valors[id]!=='') el.value=valors[id];
+  });
+  if(valors.mode) setMode(valors.mode);
+}
+
 function setMode(m){
   mode=m;
   document.getElementById('mode-ext-fields').style.display=m==='ext'?'block':'none';
   document.getElementById('mode-cor-fields').style.display=m==='cor'?'block':'none';
   document.getElementById('btn-mode-ext').className='mode-btn'+(m==='ext'?' active':'');
   document.getElementById('btn-mode-cor').className='mode-btn'+(m==='cor'?' active':'');
+  desarValors();
 }
 
 function getDextDint(){
@@ -284,6 +310,16 @@ function renderLlista(){
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js'));
 }
+
+// ── Inicialització: carrega valors desats i activa el desat automàtic ──
+carregarValors();
+CAMPS_PERSISTENTS.forEach(id=>{
+  const el=document.getElementById(id);
+  if(el){
+    el.addEventListener('input', desarValors);
+    el.addEventListener('change', desarValors);
+  }
+});
 </script>
 </body>
 </html>
