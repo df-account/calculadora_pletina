@@ -272,7 +272,7 @@ function renderLlista(){
   const wrap=document.getElementById('llista-cintes');
   const totW=document.getElementById('totals-wrap');
   if(cintes.length===0){
-    wrap.innerHTML='<div class="empty-state"><i class="ti ti-inbox"></i><p>Encara no s\'ha afegit cap cinta</p></div>';
+    wrap.innerHTML='<div class="empty-state"><i class="ti ti-inbox"></i><p>Encara no s\'ha afegit res.</p></div>';
     totW.style.display='none';return;
   }
   let totalM=0,totalKg=0;
@@ -304,7 +304,7 @@ function renderLlista(){
   totW.style.display='block';
   document.getElementById('tot-m').innerHTML=`${totalM.toFixed(1)} <span class="metric-unit">m</span>`;
   document.getElementById('tot-kg').innerHTML=`${totalKg.toFixed(2)} <span class="metric-unit">kg</span>`;
-  document.getElementById('tot-n').textContent=cintes.length+' cinta'+(cintes.length>1?'s':'');
+  document.getElementById('tot-n').textContent=cintes.length+' rotlle'+(cintes.length>1?'s':'');
 }
 
 if('serviceWorker' in navigator){
